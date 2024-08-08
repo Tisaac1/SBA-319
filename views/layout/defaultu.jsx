@@ -1,9 +1,6 @@
 const React = require('react');
-const DefaultLayout = require('../layout/defaultu');
 
-const React = require('react');
-
-class DefaultLayout extends React.Component {
+class DefaultuLayout extends React.Component {
     render () {
         return (
             <html>
@@ -17,4 +14,4 @@ class DefaultLayout extends React.Component {
     }
 }
 
-module.exports = DefaultuserLayout;
+module.exports = DefaultuLayout;

@@ -4,9 +4,9 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import jsxViewEngine from 'jsx-view-engine';
 import methodOverride from 'method-override';
-import userRoutes from './controllers/users.mjs'
-import ptoRoutes from './controllers/pto.mjs'
-
+import userNRoutes from './controllers/users.mjs'
+import ptoRRoutes from './controllers/pto.mjs'
+import db from './db/conn.mjs'
 
 //variable declarations///==============================================================
 dotenv.config();
@@ -28,13 +28,13 @@ app.use(express.urlencoded({extended:false}));
 app.use(methodOverride('_method'));
 
 //Routes//===========================================================================
-app.use('/pto', ptoRoutes);
-app.use('/users', userRoutes);
+app.use('/ptoR', ptoRRoutes);
+app.use('/usersN', userNRoutes);
 
 app.get('/',(req,res) => {
     res.send(
-        `<div>this is my root route for pto and users <br/><a href ='/pto'>pto</a>
-            <br/><a href='/users'>users</a>
+        `<div>this is my root route for pto and users <br/><a href ='/ptoR'>pto</a>
+            <br/><a href='/users'>user</a>
             </div>`
     )
 });

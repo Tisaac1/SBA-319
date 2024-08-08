@@ -1,8 +1,4 @@
 const React = require('react');
-const DefaultLayout = require('../layout/defaultp');
-
-const React = require('react');
-
 
 class DefaultLayout extends React.Component {
     render () {
@@ -18,4 +14,4 @@ class DefaultLayout extends React.Component {
     }
 }
 
-module.exports = DefaultptoLayout;
+module.exports = DefaultLayout;
