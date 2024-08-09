@@ -1,21 +1,15 @@
 const React = require('react');
-const DefaultLayout = require('../layout/Default');
-
 class Show extends React.Component {
     render () {
-        const pto = this.props.ptoR;
+        const ptoR = this.props.pto;
 
         return (
-            <DefaultLayout title='Show an Individual Pto'>
-                <p>The {pto.status} is {pto.updated} </p>
-                {pto.approved ? 'It is approved' : 'NOT APPROVED'}
-                <br />
-                <a href={`/ptoR/${pto._id}/edit`}>Edit this Pto</a>
-                <form action={`/ptoR/${pto._id}?_method=DELETE`} method = "POST">
-                    <input type="submit" value="DELETE"/>
-                </form>
-                <a href='/ptoR'>Back to Index</a>
-            </DefaultLayout>
+            <div>
+                <h1>Show Page</h1>
+                <p>The {ptoR.name} is {ptoR.update}</p>
+                {ptoR.status ? 'approved?' : "NOT APPROVED!"}
+            </div>
+
         )
     }
 }

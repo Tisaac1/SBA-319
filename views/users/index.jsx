@@ -3,19 +3,19 @@ const DefaultLayout = require('../layout/Default');
 
 class Index extends React.Component {
     render () {
-        const { ptoR } = this.props;
+        const { users } = this.props;
 
         return (
-            <DefaultLayout title = {'pto Index Page'}>
+            <DefaultLayout title = {'users Index Page'}>
                 <nav>
-                    <a href='/ptoR/new'>Create a New pto</a>
+                    <a href='/users/new'>Create a New users</a>
                 </nav>
                 <ul>
                 return (
     <div>
-      {ptoR.map((pto) => (
-        <div key={pto.id}>
-          <h2>Item: {pto.title}</h2>
+      {users.map((users) => (
+        <div key={users.id}>
+          <h2>Item: {users.title}</h2>
         </div>
       ))}
     </div>

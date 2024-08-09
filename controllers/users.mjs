@@ -1,9 +1,9 @@
 import express from 'express';
 const router = express.Router();
-import user from '../models/users.mjs';
+import users from '../models/users.mjs';
 import db from '../db/conn.mjs';
-import Users from '../models/users.mjs';
-// const Users = [
+
+// const users = [
 //     {id: 1, name: "Tiffany Isaac", hireYear: 2020, title: "QA Engineer" },
 //     {id: 2, name: "Tina Snow", hireYear: 2017, title: "Director of sound" },
 //     {id: 3, name: "Wolverine Jack", hireYear: 2002, title: "Security" },
@@ -11,67 +11,99 @@ import Users from '../models/users.mjs';
 //     {id: 5, name: "Chris Evans", hireYear: 2024, title: "Supervisor" },
 // ];
 
-// Get all Users --- Create GET routes
 router.get('/', async (req, res) => {
-    res.json(Users);
-});
-
-// GET a user by ID
-router.get('/:id', (req, res) => {
-    const user = Users.find(emp => emp.id === parseInt(req.params.id));
-    if (!user) return res.status(404).send('user not found.');
-    res.json(user);
-});
-
-// Create POST routes
-router.post('/', async (req, res) => {
     try {
-        const newUser = {
-            id: req.body.id,
-            name: req.body.name,
-            hireYear: req.body.hireYear,
-            title: req.body.title
-        };
-
-        const result = await db.collection('Users').insertOne(newUser);
-        res.send("New User has been added.");
-    } catch (err) {
-        console.error('Error adding User:', err);
-        res.status(500).send('Error adding User');
+        const foundusers = await users.find({});
+        res.status(200).render('users/index', { users: foundusers})
+      
+    } catch (e) {
+        res.status(400).send(e);
     }
-});
+})
 
-//--- Create PATCH or PUT routes for data
+
+router.get('/new', (req, res) => {
+    res.render('users/new');
+
+})
+
+
+router.delete('/:id', async(req, res) => {
+    try {
+        const deletedusers = await users.findByIdAndDelete(req.params.id);
+        console.log(deletedusers);
+        res.status(200).redirect('/users');
+   
+    } catch (e) {
+        res.status(400).send(e);
+    }
+})
+
 router.put('/:id', async (req, res) => {
-    try {
-        const UserId = parseInt(req.params.id);
-        const updatedUser = {
-            $set: {
-                id: req.body.id,
-                name: req.body.name,
-                hireYear: req.body.hireYear,
-                title: req.body.title
-            }
-        };
-        const result = await db.collection('Users').updateOne({ id: UserId }, updatedUser);
-        res.send("User data updated.");
-    } catch (err) {
-        console.error('Error updating user:', err);
-        res.status(500).send('Error updating user');
-    }
-});
+    
+        if (req.body.statusofApproval === 'on') {
+            req.body.statusofApproval = true;
+        } else {
+            req.body.statusofApproval = false;
+        }
+        // console.log(req.body);
 
-//--- Create DELETE routes for data
-router.delete('/:id', async (req, res) => {
     try {
-        const userId = parseInt(req.params.id);
-        const result = await db.collection('Users').deleteOne({ id: userId });
-        res.send('user deleted');
-    } catch (err) {
-        console.error('Error deleting user:', err);
-        res.status(500).send('Error deleting user');
+        const updatedusers = await users.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true },
+        );
+        console.log(updatedusers);
+        res.redirect(`/users/${req.params.id}`);
+     
+    } catch (e) {
+        res.status(400).send(e);
     }
-});
-""
+})
 
-export default router; // Export the router instance
+
+router.post('/users', async(req, res) => {
+   
+    if (req.body.statusofApproval === 'on') {
+        req.body.statusofApproval = true;
+    } else {
+        req.body.statusofApproval = false;
+    }
+    console.log(req.body);
+
+    try {
+        const createdusers = await users.create(req.body);
+       
+        res.status(200).redirect('/users');
+  
+    } catch(e) {
+        res.status(400).send(e);
+    }
+})
+
+
+router.get("/:id/edit", async(req, res) => {
+    try {
+        const foundusers = await users.findById(req.params.id);
+    
+        res.status(200).render('users/edit', {users: foundusers});
+   
+    } catch(e) {
+        res.status(400).send(e);
+    }
+})
+
+
+router.get('/:id', async (req, res) => {
+    try {
+        const foundusers = await users.findById(req.params.id);
+
+        res.render('users/show', {users:foundusers});
+            
+    } catch (e) {
+        res.status(400).send('err');
+    }
+})
+
+export default router;

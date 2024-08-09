@@ -29,7 +29,7 @@ app.use(methodOverride('_method'));
 
 //Routes//===========================================================================
 app.use('/ptoR', ptoRRoutes);
-app.use('/usersN', userNRoutes);
+app.use('/users', userNRoutes);
 
 app.get('/',(req,res) => {
     res.send(

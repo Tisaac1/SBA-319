@@ -13,6 +13,6 @@ const usersSchema = new mongoose.Schema({
    Status: Boolean 
 });
 
-const User = mongoose.model('User', usersSchema);
+const Users = mongoose.model('users', usersSchema);
 
-export default User;
+export default Users;

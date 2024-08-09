@@ -10,11 +10,11 @@ class Show extends React.Component {
                 <p>The {users.name} is {users.hours} </p>
                 {users.approved ? 'Approved' : 'NOT enough HOURS'}
                 <br />
-                <a href={`/usersN/${users._id}/edit`}>Edit this users</a>
-                <form action={`/usersN/${users._id}?_method=DELETE`} method = "POST">
+                <a href={`/users/${users._id}/edit`}>Edit this users</a>
+                <form action={`/users/${users._id}?_method=DELETE`} method = "POST">
                     <input type="submit" value="DELETE"/>
                 </form>
-                <a href='/usersN'>Back to Index</a>
+                <a href='/users'>Back to Index</a>
             </DefaultLayout>
         )
     }
